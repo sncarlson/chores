@@ -1,11 +1,4 @@
 """
-TODO Specifies endpoints and behavior for at least:
-    Two GET requests
-    One POST request
-    One PATCH request
-    One DELETE request
-    Utilize the @app.errorhandler decorator to format error responses as JSON objects
-    for at least four different status codes
 
 TODO Project includes a custom @requires_auth decorator that:
     get the Authorization header from the request
@@ -17,7 +10,7 @@ TODO Project includes a custom @requires_auth decorator that:
         the token is expired
         the claims are invalid
         the token is invalid
-        the JWT doesn’t contain the proper action
+        the JWT doesn't contain the proper action
 
 TODO Project includes at least two different roles that have distinct permissions for actions.
  These roles and permissions are clearly defined in the project README. Students can reference the

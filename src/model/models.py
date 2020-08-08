@@ -11,8 +11,116 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-
 class Chore(db.Model):
     __tablename__ = 'Chores'
-
     id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(120), nullable=False)
+    cost = db.Column(db.Float, nullable=False)
+    area_id = db.Column(db.Integer, db.ForeignKey('Area.id'), nullable=False)
+
+    def __init__(self, description, cost, area_id):
+        self.description = description
+        self.cost = cost
+        self.area_id = area_id
+
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def update(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def format(self):
+        return {
+            'id': self.id,
+            'description': self.description,
+            'cost': self.cost,
+            'area_id': self.area_id
+        }
+
+
+class Area(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False)
+
+    def __init__(self, name):
+        self.name = name
+
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def update(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def format(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
+
+class Worker(db.Model):
+    __tablename__ = 'Workers'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False)
+
+    def __init__(self, name):
+        self.name = name
+
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def update(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def format(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
+
+class AssignedChores(db.Model):
+    __tablename__ = 'AssignedChores'
+    id = db.Column(db.Integer, primary_key=True)
+    chore_id = db.Column(db.Integer, db.ForeignKey('Chore.id'), nullable=False)
+    worker_id = db.Column(db.Integer, db.ForeignKey('Worker.id'), nullable=False)
+    complete = db.Column(db.Boolean, nullable=False)
+
+    def __init__(self, chore_id, worker_id, complete):
+        self.chore_id = chore_id
+        self.worker_id = worker_id
+        self.complete = complete
+
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def update(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def format(self):
+        return {
+            'id': self.id,
+            'chore_id': self.chore_id,
+            'worker_id': self.worker_id,
+            'complete': self.complete
+        }
