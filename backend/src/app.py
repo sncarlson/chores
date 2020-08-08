@@ -23,3 +23,20 @@ TODO Project includes at least two different roles that have distinct permission
  These roles and permissions are clearly defined in the project README. Students can reference the
  Casting Agency Specs in the Specifications section of this rubric as an example.
 """
+
+from flask import Flask
+
+
+def create_app():
+    app = Flask(__name__)
+    app.config.from_pyfile('setup')
+
+    from .database.database import db
+    db.init_app(app)
+
+    with app.app_context():
+        from .controller import controller
+
+        app.register_blueprint(controller.controller_bp)
+
+    return app
