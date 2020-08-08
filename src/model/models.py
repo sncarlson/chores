@@ -6,7 +6,10 @@
 # TODO Creates methods to serialize model data and helper methods to simplify API behavior
 #  such as insert, update and delete.
 
-from database.database import db
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
+
 
 
 class Chore(db.Model):
