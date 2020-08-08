@@ -16,8 +16,6 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SESSION_COOKIE_NAME = os.environ.get('SESSION_COOKIE_NAME')
 
-
-
 class ProdConfig(Config):
     TESTING = False
     DATABASE_URI = os.environ.get('PROD_DATABASE_URI')

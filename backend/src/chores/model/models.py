@@ -6,3 +6,10 @@
 # TODO Creates methods to serialize model data and helper methods to simplify API behavior
 #  such as insert, update and delete.
 
+from chores.database.database import db
+
+
+class Chore(db.Model):
+    __tablename__ = 'Chores'
+
+    id = db.Column(db.Integer, primary_key=True)
