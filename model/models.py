@@ -7,12 +7,13 @@
 #  such as insert, update and delete.
 
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import relationship
 
 db = SQLAlchemy()
 
 
 class Chore(db.Model):
-    __tablename__ = 'Chores'
+    __tablename__ = 'Chore'
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(120), nullable=False)
     cost = db.Column(db.Float, nullable=False)
@@ -44,8 +45,10 @@ class Chore(db.Model):
 
 
 class Area(db.Model):
+    __tablename__ = 'Area'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), nullable=False)
+    name = db.Column(db.String(120), unique=True, nullable=False)
+    chores = relationship("Chore")
 
     def __init__(self, name):
         self.name = name
@@ -69,9 +72,9 @@ class Area(db.Model):
 
 
 class Worker(db.Model):
-    __tablename__ = 'Workers'
+    __tablename__ = 'Worker'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), nullable=False)
+    name = db.Column(db.String(120), unique=True, nullable=False)
 
     def __init__(self, name):
         self.name = name
@@ -95,7 +98,7 @@ class Worker(db.Model):
 
 
 class AssignedChores(db.Model):
-    __tablename__ = 'AssignedChores'
+    __tablename__ = 'AssignedChore'
     id = db.Column(db.Integer, primary_key=True)
     chore_id = db.Column(db.Integer, db.ForeignKey('Chore.id'), nullable=False)
     worker_id = db.Column(db.Integer, db.ForeignKey('Worker.id'), nullable=False)

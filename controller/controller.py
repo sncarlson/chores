@@ -9,6 +9,7 @@ TODO Specifies endpoints and behavior for at least:
 """
 
 from flask import Blueprint
+from model.models import Chore, Area, Worker, AssignedChores
 
 # Blueprint Configuration
 controller_bp = Blueprint(

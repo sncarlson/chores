@@ -9,5 +9,5 @@ DEBUG = True
 
 # Connect to the database
 
-SQLALCHEMY_DATABASE_URI = 'postgres://test:test@hive:5432/test'
+SQLALCHEMY_DATABASE_URI = 'postgres://chores:chores@localhost:5432/chores'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
