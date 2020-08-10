@@ -15,7 +15,7 @@ db = SQLAlchemy()
 class Chore(db.Model):
     __tablename__ = 'Chore'
     id = db.Column(db.Integer, primary_key=True)
-    description = db.Column(db.String(120), nullable=False)
+    description = db.Column(db.String(120), unique=True, nullable=False)
     cost = db.Column(db.Float, nullable=False)
     area_id = db.Column(db.Integer, db.ForeignKey('Area.id'), nullable=False)
 
