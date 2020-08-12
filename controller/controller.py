@@ -9,9 +9,9 @@ TODO Specifies endpoints and behavior for at least:
 """
 import sys
 
-import werkzeug
 from flask import Blueprint, jsonify, abort, request
-from model.models import Area, Chore, Worker, AssignedChores, db
+import json
+from model.models import Area, Chore, Worker, AssignedChore, db
 
 # Blueprint Configuration
 controller_bp = Blueprint(
@@ -30,7 +30,7 @@ def chores():
 
     result = {
         "success": True,
-        "areas": data
+        "chores": data
     }
     return jsonify(result)
 
@@ -65,12 +65,63 @@ def create_chores():
 
 @controller_bp.route('/chores/<chore_id>', methods=['DELETE'])
 def delete_chore(chore_id):
-    return "Hello from the controller!"
+    error = False
+
+    chore = Chore.query.filter_by(id=chore_id).first_or_404()
+    try:
+        chore.delete()
+        db.session.commit()
+    except:
+        error = True
+        db.session.rollback()
+        print(sys.exe_info())
+    finally:
+        db.session.close()
+
+    if error:
+        abort(500)
+    else:
+        return jsonify({
+            "success": True,
+            "delete": chore_id
+        })
 
 
 @controller_bp.route('/chores/<chore_id>', methods=['PATCH'])
 def update_chore(chore_id):
-    return "Hello from the controller!"
+    error = False
+    try:
+        chore = Chore.query.filter_by(id=chore_id).first_or_404()
+        if request.json.get('description') == "" or request.json.get('cost') == "" or request.json.get('area') == "":
+            abort(422)
+
+        if request.json.get('description'):
+            chore.description = request.json.get('description')
+
+        if request.json.get('cost'):
+            chore.cost = request.json.get('cost')
+
+        if request.json.get('area'):
+            area = Area.query.filter_by(name=request.json.get('area')).first_or_404()
+            chore.area_id = area.id
+
+        chore.update()
+        chore = Chore.query.filter_by(id=chore_id).first_or_404()
+
+    except:
+        error = True
+        db.session.rollback()
+        print(sys.exc_info())
+    finally:
+        db.session.close()
+
+    if error:
+        abort(500)
+    else:
+        return jsonify({
+            "success": True,
+            "chores": [chore.format()]
+        })
 
 
 @controller_bp.route('/areas', methods=['GET'])
@@ -91,17 +142,79 @@ def areas():
 
 @controller_bp.route('/areas', methods=['POST'])
 def create_area():
-    return "Hello from the controller!"
+    name = request.json.get('name')
+    try:
+        new_area = Area(
+            name=name
+        )
+        new_area.insert()
+
+    except:
+        print(sys.exc_info())
+    finally:
+        db.session.close()
+
+    area = Area.query.filter_by(name=name).first_or_404()
+
+    return jsonify({
+        "success": True,
+        "area": area.format()
+
+    })
 
 
 @controller_bp.route('/areas/<area_id>', methods=['DELETE'])
 def delete_area(area_id):
-    return "Hello from the controller!"
+    error = False
+
+    area = Area.query.filter_by(id=area_id).first_or_404()
+    try:
+        area.delete()
+        db.session.commit()
+    except:
+        error = True
+        db.session.rollback()
+        print(sys.exe_info())
+    finally:
+        db.session.close()
+
+    if error:
+        abort(500)
+    else:
+        return jsonify({
+            "success": True,
+            "delete": area_id
+        })
 
 
 @controller_bp.route('/areas/<area_id>', methods=['PATCH'])
 def update_area(area_id):
-    return "Hello from the controller!"
+    error = False
+    try:
+        area = Area.query.filter_by(id=area_id).first_or_404()
+        if request.json.get('name') == "":
+            abort(422)
+
+        if request.json.get('name'):
+            area.name = request.json.get('name')
+
+        area.update()
+        area = Area.query.filter_by(id=area_id).first_or_404()
+
+    except:
+        error = True
+        db.session.rollback()
+        print(sys.exc_info())
+    finally:
+        db.session.close()
+
+    if error:
+        abort(500)
+    else:
+        return jsonify({
+            "success": True,
+            "areas": [area.format()]
+        })
 
 
 @controller_bp.route('/workers', methods=['GET'])
@@ -122,22 +235,84 @@ def workers():
 
 @controller_bp.route('/workers', methods=['POST'])
 def create_worker():
-    return "Hello from the controller!"
+    name = request.json.get('name')
+    try:
+        new_worker = Worker(
+            name=name
+        )
+        new_worker.insert()
+
+    except:
+        print(sys.exc_info())
+    finally:
+        db.session.close()
+
+    worker = Worker.query.filter_by(name=name).first_or_404()
+
+    return jsonify({
+        "success": True,
+        "worker": worker.format()
+
+    })
 
 
 @controller_bp.route('/workers/<worker_id>', methods=['DELETE'])
 def delete_worker(worker_id):
-    return "Hello from the controller!"
+    error = False
+
+    worker = Worker.query.filter_by(id=worker_id).first_or_404()
+    try:
+        worker.delete()
+        db.session.commit()
+    except:
+        error = True
+        db.session.rollback()
+        print(sys.exe_info())
+    finally:
+        db.session.close()
+
+    if error:
+        abort(500)
+    else:
+        return jsonify({
+            "success": True,
+            "delete": worker_id
+        })
 
 
 @controller_bp.route('/workers/<worker_id>', methods=['PATCH'])
 def update_worker(worker_id):
-    return "Hello from the controller!"
+    error = False
+    try:
+        worker = Worker.query.filter_by(id=worker_id).first_or_404()
+        if request.json.get('name') == "":
+            abort(422)
+
+        if request.json.get('name'):
+            worker.name = request.json.get('name')
+
+        worker.update()
+        worker = Area.query.filter_by(id=worker_id).first_or_404()
+
+    except:
+        error = True
+        db.session.rollback()
+        print(sys.exc_info())
+    finally:
+        db.session.close()
+
+    if error:
+        abort(500)
+    else:
+        return jsonify({
+            "success": True,
+            "worker": [worker.format()]
+        })
 
 
 @controller_bp.route('/assigned-chores', methods=['GET'])
 def assigned_chores():
-    all_assigned_chores = AssignedChores.query.all()
+    all_assigned_chores = AssignedChore.query.all()
 
     if len(all_assigned_chores) == 0:
         abort(404)
@@ -146,24 +321,90 @@ def assigned_chores():
 
     result = {
         "success": True,
-        "areas": data
+        "assigned-chores": data
     }
     return jsonify(result)
 
 
 @controller_bp.route('/assigned-chores', methods=['POST'])
 def assign_chore():
-    return "Hello from the controller!"
+    chore = request.json.get('chore')
+    chore = Chore.query.filter_by(description=chore).first_or_404()
+    worker = request.json.get('worker')
+    worker = Worker.query.filter_by(name=worker).first_or_404()
+
+    try:
+        new_assigned_chore = AssignedChore(
+            chore_id=chore.id,
+            worker_id=worker.id,
+            complete=False
+        )
+        new_assigned_chore.insert()
+
+    except:
+        print(sys.exc_info())
+    finally:
+        db.session.close()
+
+    return jsonify({
+        "success": True
+    })
 
 
 @controller_bp.route('/assigned-chores/<assigned_chore_id>', methods=['DELETE'])
 def delete_assigned_chore(assigned_chore_id):
-    return "Hello from the controller!"
+    error = False
+
+    chore = AssignedChore.query.filter_by(id=assigned_chore_id).first_or_404()
+    try:
+        chore.delete()
+        db.session.commit()
+    except:
+        error = True
+        db.session.rollback()
+        print(sys.exe_info())
+    finally:
+        db.session.close()
+
+    if error:
+        abort(500)
+    else:
+        return jsonify({
+            "success": True,
+            "delete": assigned_chore_id
+        })
 
 
 @controller_bp.route('/assigned-chores/<assigned_chore_id>', methods=['PATCH'])
 def update_assigned_chore(assigned_chore_id):
-    return "Hello from the controller!"
+    error = False
+    try:
+        assigned_chore = AssignedChore.query.filter_by(id=assigned_chore_id).first_or_404()
+        if request.json.get('worker') == "" or request.json.get('chore') == "":
+            abort(422)
+
+        if request.json.get('worker'):
+            worker = Worker.query.filter_by(name=request.json.get('worker')).first_or_404()
+            assigned_chore.worker_id = worker.id
+
+        if request.json.get('chore'):
+            chore = Chore.query.filter_by(description=request.json.get('chore')).first_or_404()
+            assigned_chore.chore_id = chore.id
+
+        assigned_chore.update()
+    except:
+        error = True
+        db.session.rollback()
+        print(sys.exc_info())
+    finally:
+        db.session.close()
+
+    if error:
+        abort(500)
+    else:
+        return jsonify({
+            "success": True
+        })
 
 
 @controller_bp.errorhandler(404)

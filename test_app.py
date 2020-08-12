@@ -11,7 +11,7 @@ import json
 from flask_sqlalchemy import SQLAlchemy
 
 from app import create_app
-from model.models import Chore, Area, Worker, AssignedChores
+from model.models import Chore, Area, Worker, AssignedChores, setup_db
 
 
 class ChoresTestCase(unittest.TestCase):
@@ -31,6 +31,21 @@ class ChoresTestCase(unittest.TestCase):
 
     def tearDown(self):
         pass
+
+    def test_get_chores(self):
+        response = self.client().get('/chores')
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['chores'])
+
+    def test_delete_question_failure(self):
+        response = self.client().delete('/questions/5000')
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(data['success'], False)
 
 
 """

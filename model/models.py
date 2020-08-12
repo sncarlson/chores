@@ -12,10 +12,18 @@ from sqlalchemy.orm import relationship
 db = SQLAlchemy()
 
 
+def setup_db(app, database_path):
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    db.app = app
+    db.init_app(app)
+    db.create_all()
+
+
 class Chore(db.Model):
     __tablename__ = 'Chore'
     id = db.Column(db.Integer, primary_key=True)
-    description = db.Column(db.String(120), unique=True, nullable=False)
+    description = db.Column(db.String(120), nullable=False)
     cost = db.Column(db.Float, nullable=False)
     area_id = db.Column(db.Integer, db.ForeignKey('Area.id'), nullable=False)
 
@@ -97,7 +105,7 @@ class Worker(db.Model):
         }
 
 
-class AssignedChores(db.Model):
+class AssignedChore(db.Model):
     __tablename__ = 'AssignedChore'
     id = db.Column(db.Integer, primary_key=True)
     chore_id = db.Column(db.Integer, db.ForeignKey('Chore.id'), nullable=False)
