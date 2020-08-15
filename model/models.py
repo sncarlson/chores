@@ -26,6 +26,7 @@ class Chore(db.Model):
     description = db.Column(db.String(120), nullable=False)
     cost = db.Column(db.Float, nullable=False)
     area_id = db.Column(db.Integer, db.ForeignKey('Area.id'), nullable=False)
+    assigned_chores = relationship('AssignedChore', backref='chore', lazy=True)
 
     def __init__(self, description, cost, area_id):
         self.description = description
@@ -56,7 +57,7 @@ class Area(db.Model):
     __tablename__ = 'Area'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=True, nullable=False)
-    chores = relationship("Chore")
+    chores = relationship('Chore', backref='area', lazy=True)
 
     def __init__(self, name):
         self.name = name
@@ -83,6 +84,7 @@ class Worker(db.Model):
     __tablename__ = 'Worker'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=True, nullable=False)
+    assigned_chores = relationship('AssignedChore', backref='worker', lazy=True)
 
     def __init__(self, name):
         self.name = name
@@ -101,7 +103,7 @@ class Worker(db.Model):
     def format(self):
         return {
             'id': self.id,
-            'name': self.name
+            'name': self.name,
         }
 
 
@@ -110,7 +112,8 @@ class AssignedChore(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     chore_id = db.Column(db.Integer, db.ForeignKey('Chore.id'), nullable=False)
     worker_id = db.Column(db.Integer, db.ForeignKey('Worker.id'), nullable=False)
-    complete = db.Column(db.Boolean, nullable=False)
+    duration = db.Column(db.String(120), nullable=False)
+    frequency = db.Column(db.String(120), nullable=False)
 
     def __init__(self, chore_id, worker_id, complete):
         self.chore_id = chore_id
@@ -133,5 +136,6 @@ class AssignedChore(db.Model):
             'id': self.id,
             'chore_id': self.chore_id,
             'worker_id': self.worker_id,
-            'complete': self.complete
+            'duration': self.duration,
+            'frequency': self.frequency
         }

@@ -10,7 +10,6 @@ TODO Specifies endpoints and behavior for at least:
 import sys
 
 from flask import Blueprint, jsonify, abort, request
-import json
 from model.models import Area, Chore, Worker, AssignedChore, db
 
 # Blueprint Configuration
@@ -125,7 +124,7 @@ def update_chore(chore_id):
 
 
 @controller_bp.route('/areas', methods=['GET'])
-def areas():
+def get_areas():
     all_areas = Area.query.all()
 
     if len(all_areas) == 0:
@@ -218,17 +217,63 @@ def update_area(area_id):
 
 
 @controller_bp.route('/workers', methods=['GET'])
-def workers():
+def get_workers():
     all_workers = Worker.query.all()
 
     if len(all_workers) == 0:
         abort(404)
 
-    data = [worker.format() for worker in all_workers]
+    data = []
+
+    for worker in all_workers:
+        worker_chores = []
+        for worker_chore in worker.assigned_chores:
+            chore_record = {
+                'description': worker_chore.chore.description,
+                'area': worker_chore.chore.area.name,
+                'wage': worker_chore.chore.cost,
+                'frequency': worker_chore.frequency,
+                'duration': worker_chore.duration
+            }
+            worker_chores.append(chore_record)
+        record = {
+            'name:': worker.name,
+            'chores': worker_chores
+        }
+        data.append(record)
 
     result = {
         "success": True,
-        "areas": data
+        "workers": data
+    }
+    return jsonify(result)
+
+
+@controller_bp.route('/workers/<worker_id>', methods=['GET'])
+def get_single_worker(worker_id):
+    worker = Worker.query.filter_by(id=worker_id).first_or_404()
+
+    data = []
+
+    worker_chores = []
+    for worker_chore in worker.assigned_chores:
+        chore_record = {
+            'description': worker_chore.chore.description,
+            'area': worker_chore.chore.area.name,
+            'wage': worker_chore.chore.cost,
+            'frequency': worker_chore.frequency,
+            'duration': worker_chore.duration
+        }
+        worker_chores.append(chore_record)
+    record = {
+        'name:': worker.name,
+        'chores': worker_chores
+    }
+    data.append(record)
+
+    result = {
+        "success": True,
+        "workers": data
     }
     return jsonify(result)
 
@@ -252,7 +297,6 @@ def create_worker():
     return jsonify({
         "success": True,
         "worker": worker.format()
-
     })
 
 
@@ -317,7 +361,18 @@ def assigned_chores():
     if len(all_assigned_chores) == 0:
         abort(404)
 
-    data = [chore.format() for chore in all_assigned_chores]
+    data = []
+
+    for chore in all_assigned_chores:
+        record = {
+            'chore': chore.chore.description,
+            'area': chore.chore.area.name,
+            'wage': chore.chore.cost,
+            'worker': chore.worker.name,
+            'duration': chore.duration,
+            'frequency': chore.frequency
+        }
+        data.append(record)
 
     result = {
         "success": True,
