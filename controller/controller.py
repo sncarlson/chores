@@ -387,12 +387,15 @@ def assign_chore():
     chore = Chore.query.filter_by(description=chore).first_or_404()
     worker = request.json.get('worker')
     worker = Worker.query.filter_by(name=worker).first_or_404()
+    duration = request.json.get('duration')
+    frequency = request.json.get('frequency')
 
     try:
         new_assigned_chore = AssignedChore(
             chore_id=chore.id,
             worker_id=worker.id,
-            complete=False
+            duration=duration,
+            frequency=frequency
         )
         new_assigned_chore.insert()
 

@@ -26,7 +26,7 @@ class Chore(db.Model):
     description = db.Column(db.String(120), nullable=False)
     cost = db.Column(db.Float, nullable=False)
     area_id = db.Column(db.Integer, db.ForeignKey('Area.id'), nullable=False)
-    assigned_chores = relationship('AssignedChore', backref='chore', lazy=True)
+    assigned_chores = relationship('AssignedChore', backref='chore', lazy=True, cascade="all, delete")
 
     def __init__(self, description, cost, area_id):
         self.description = description
@@ -57,7 +57,7 @@ class Area(db.Model):
     __tablename__ = 'Area'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=True, nullable=False)
-    chores = relationship('Chore', backref='area', lazy=True)
+    chores = relationship('Chore', backref='area', lazy=True, cascade="all, delete")
 
     def __init__(self, name):
         self.name = name
@@ -115,10 +115,11 @@ class AssignedChore(db.Model):
     duration = db.Column(db.String(120), nullable=False)
     frequency = db.Column(db.String(120), nullable=False)
 
-    def __init__(self, chore_id, worker_id, complete):
+    def __init__(self, chore_id, worker_id, duration, frequency):
         self.chore_id = chore_id
         self.worker_id = worker_id
-        self.complete = complete
+        self.duration = duration
+        self.frequency = frequency
 
     def insert(self):
         db.session.add(self)
