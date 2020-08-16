@@ -1,12 +1,7 @@
-"""
-TODO Includes at least one test for expected success and error behavior for each endpoint
- using the unittest library
-
-TODO Includes tests demonstrating role-based access control, at least two per role.
-"""
-
 import unittest
 import json
+
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 from app import create_app
@@ -15,19 +10,18 @@ from model.models import Chore, Area, Worker, AssignedChore, setup_db
 
 class ChoresTestCase(unittest.TestCase):
     def setUp(self):
-        self.app = create_app()
+        self.app = Flask(__name__)
         self.client = self.app.test_client
+
+        # Update Database info as required to ensure testing is functional
+
         self.database_name = "chores_test"
         self.database_path = "postgres://{}/{}".format('chores:chores@localhost:5432', self.database_name)
         setup_db(self.app, self.database_path)
 
-        # binds the app to the current context
         with self.app.app_context():
-            self.db = SQLAlchemy()
-            self.db.init_app(self.app)
-            # create all tables
-            self.db.drop_all()
-            self.db.create_all()
+            from controller import controller
+            self.app.register_blueprint(controller.controller_bp)
 
     def tearDown(self):
         pass

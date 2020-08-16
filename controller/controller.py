@@ -1,12 +1,3 @@
-"""
-TODO Specifies endpoints and behavior for at least:
-    Two GET requests
-    One POST request
-    One PATCH request
-    One DELETE request
-    Utilize the @app.errorhandler decorator to format error responses as JSON objects
-    for at least four different status codes
-"""
 import sys
 
 from flask import Blueprint, jsonify, abort, request
@@ -25,8 +16,15 @@ def chores():
     if len(all_chores) == 0:
         abort(404)
 
-    data = [chore.format() for chore in all_chores]
+    data = []
 
+    for chore in all_chores:
+        record = {
+            'area': chore.area.name,
+            'cost': chore.cost,
+            'description': chore.description
+        }
+        data.append(record)
     result = {
         "success": True,
         "chores": data
@@ -226,19 +224,9 @@ def get_workers():
     data = []
 
     for worker in all_workers:
-        worker_chores = []
-        for worker_chore in worker.assigned_chores:
-            chore_record = {
-                'description': worker_chore.chore.description,
-                'area': worker_chore.chore.area.name,
-                'wage': worker_chore.chore.cost,
-                'frequency': worker_chore.frequency,
-                'duration': worker_chore.duration
-            }
-            worker_chores.append(chore_record)
+
         record = {
-            'name:': worker.name,
-            'chores': worker_chores
+            'name': worker.name
         }
         data.append(record)
 
@@ -266,7 +254,7 @@ def get_single_worker(worker_id):
         }
         worker_chores.append(chore_record)
     record = {
-        'name:': worker.name,
+        'name': worker.name,
         'chores': worker_chores
     }
     data.append(record)
