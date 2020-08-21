@@ -324,7 +324,7 @@ def update_worker(worker_id):
             worker.name = request.json.get('name')
 
         worker.update()
-        worker = Area.query.filter_by(id=worker_id).first_or_404()
+        worker = Worker.query.filter_by(id=worker_id).first_or_404()
 
     except:
         error = True
@@ -426,7 +426,7 @@ def update_assigned_chore(assigned_chore_id):
     error = False
     try:
         assigned_chore = AssignedChore.query.filter_by(id=assigned_chore_id).first_or_404()
-        if request.json.get('worker') == "" or request.json.get('chore') == "":
+        if request.json.get('worker') == "" or request.json.get('chore') == "" or request.json.get('duration') == "" or request.json.get('frequency') == "":
             abort(422)
 
         if request.json.get('worker'):
@@ -437,7 +437,14 @@ def update_assigned_chore(assigned_chore_id):
             chore = Chore.query.filter_by(description=request.json.get('chore')).first_or_404()
             assigned_chore.chore_id = chore.id
 
+        if request.json.get('duration'):
+            assigned_chore.duration = request.json.get('duration')
+
+        if request.json.get('frequency'):
+            assigned_chore.frequency = request.json.get('frequency')
+
         assigned_chore.update()
+
     except:
         error = True
         db.session.rollback()
@@ -445,11 +452,25 @@ def update_assigned_chore(assigned_chore_id):
     finally:
         db.session.close()
 
+    assigned_chore = AssignedChore.query.filter_by(id=assigned_chore_id).first_or_404()
+    data = []
+
+    record = {
+        'chore': assigned_chore.chore.description,
+        'area': assigned_chore.chore.area.name,
+        'wage': assigned_chore.chore.cost,
+        'worker': assigned_chore.worker.name,
+        'duration': assigned_chore.duration,
+        'frequency': assigned_chore.frequency
+    }
+    data.append(record)
+
     if error:
         abort(500)
     else:
         return jsonify({
-            "success": True
+            "success": True,
+            "assigned-chore": data
         })
 
 

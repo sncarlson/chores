@@ -121,7 +121,247 @@ DELETE '/chores/<chore_id>'
   "success": true
 }
 
+PATCH '/chores/<chore_id>'
+- Updates a chore
+- Request Arguments: ID chore to delete and update at least one of: description, cost, or area
+- Returns success: true if complete and dictionary of chore with updated information.
 
+{
+  "chores": [
+    {
+      "area_id": 6,
+      "cost": 0.76,
+      "description": "Test Chore 4 Patch",
+      "id": 4
+    }
+  ],
+  "success": true
+}
+
+GET '/areas'
+- Fetches an array of area dictionaries
+- Request Arguments: None
+- Returns success: Returns an array of dictionaries with area information as follows:
+
+{
+  "chores": [
+    {
+      "area": "Kitchen",
+      "cost": 0.75,
+      "description": "Test Chore 1"
+    },
+    {
+      "area": "Garage",
+      "cost": 1.75,
+      "description": "Test Chore 2"
+    },
+    {
+      "area": "Laundry Room",
+      "cost": 1.85,
+      "description": "Test Chore 3"
+    }
+  ],
+  "success": true
+}
+
+POST '/areas'
+- Creates an area
+- Request Arguments: JSON body of name: name of area.
+- Returns success: true if complete and area dictionary with id and name
+
+{
+  "area": {
+    "id": 8,
+    "name": "Test Area 1"
+  },
+  "success": true
+}
+
+DELETE '/areas/<area_id>'
+- Deletes an area
+- Request Arguments: ID area to delete
+- Returns success: true if complete and ID of area deleted.
+
+{
+  "delete": "8",
+  "success": true
+}
+
+PATCH '/areas/<area_id>'
+- Updates an area
+- Request Arguments: ID of area to delete
+- Returns success: true if complete and dictionary of chore updated.
+
+{
+  "areas": [
+    {
+      "id": 6,
+      "name": "Bedroom"
+    }
+  ],
+  "success": true
+}
+
+GET '/workers'
+- Fetches an array of worker dictionaries
+- Request Arguments: None
+- Returns success: Returns an array of dictionaries with worker information as follows:
+
+{
+  "success": true,
+  "workers": [
+    {
+      "name": "Test Worker 1"
+    },
+    {
+      "name": "Test Worker 2"
+    },
+    {
+      "name": "Test Worker 3"
+    }
+  ]
+}
+
+GET '/workers/<worker_id>'
+- Fetches an array of chores assigned to a particular worker
+- Request Arguments: ID of worker
+- Returns success: Returns an array of dictionaries with chore information for a particular worker as follows:
+
+{
+  "success": true,
+  "workers": [
+    {
+      "chores": [
+        {
+          "area": "Laundry Room",
+          "description": "Test Chore 3",
+          "duration": "Two months",
+          "frequency": "Every other day",
+          "wage": 1.85
+        },
+        {
+          "area": "Garage",
+          "description": "Test Chore 2",
+          "duration": "One Week",
+          "frequency": "Twice a day",
+          "wage": 1.75
+        }
+      ],
+      "name": "Test Worker 2"
+    }
+  ]
+}
+
+POST '/workers'
+- Creates a worker
+- Request Arguments: JSON body of name: name of worker.
+- Returns success: true if complete and worker dictionary with id and name
+
+{
+  "success": true,
+  "worker": {
+    "id": 1,
+    "name": "Test Worker 1"
+  }
+}
+
+DELETE '/workers/<worker_id>'
+- Deletes a worker
+- Request Arguments: ID of worker to delete
+- Returns success: true if complete and ID of worker deleted.
+
+{
+  "delete": "4",
+  "success": true
+}
+
+PATCH '/workers/<worker_id>
+- Updates an area
+- Request Arguments: ID of area to delete
+- Returns success: true if complete and dictionary of chore updated.
+
+{
+  "success": true,
+  "worker": [
+    {
+      "id": 3,
+      "name": "Test Worker 3 Patch"
+    }
+  ]
+}
+
+GET '/assigned-chores'
+- Fetches an array of assigned-chores dictionaries
+- Request Arguments: None
+- Returns success: Returns an array of dictionaries with worker information as follows:
+
+{
+  "assigned-chores": [
+    {
+      "area": "Bedroom",
+      "chore": "Test Chore 4 Patch",
+      "duration": "One month",
+      "frequency": "Daily",
+      "wage": 0.76,
+      "worker": "Test Worker 3 Patch"
+    },
+    {
+      "area": "Laundry Room",
+      "chore": "Test Chore 3",
+      "duration": "Two months",
+      "frequency": "Every other day",
+      "wage": 1.85,
+      "worker": "Test Worker 2"
+    },
+    {
+      "area": "Garage",
+      "chore": "Test Chore 2",
+      "duration": "One Week",
+      "frequency": "Twice a day",
+      "wage": 1.75,
+      "worker": "Test Worker 2"
+    }
+  ],
+  "success": true
+}
+
+POST '/assigned-chores'
+- Creates an assigned-chore
+- Request Arguments: JSON body of worker, chore, duration, and frequency
+- Returns success: true if complete
+
+{
+  "success": true
+}
+
+DELETE '/assigned-chores/<assigned_chore_id>'
+- Deletes an assigned-chore
+- Request Arguments: ID of assigned-chore
+- Returns success: true if complete and ID of worker deleted.
+
+{
+  "delete": "7",
+  "success": true
+}
+
+PATCH '/assigned-chores/<assigned_chore_id>'
+- Updates an assigned-chore
+- Request Arguments: ID of assigned-chore to update.  Also, at least one of worker, chore, duration, or frequency
+- Returns success: true if complete and dictionary of chore updated.
+
+{
+  "assigned-chore": [
+    {
+      "area": "Garage",
+      "chore": "Test Chore 2",
+      "duration": "Three years",
+      "frequency": "Twice a Month",
+      "wage": 1.75,
+      "worker": "Test Worker 1"
+    }
+  ],
+  "success": true
+}
 
 ```
 
