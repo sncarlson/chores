@@ -2,6 +2,7 @@ import sys
 
 from flask import Blueprint, jsonify, abort, request
 from model.models import Area, Chore, Worker, AssignedChore, db
+from auth.auth import AuthError, requires_auth
 
 # Blueprint Configuration
 controller_bp = Blueprint(
@@ -10,7 +11,8 @@ controller_bp = Blueprint(
 
 
 @controller_bp.route('/chores', methods=['GET'])
-def chores():
+@requires_auth('get:chores')
+def chores(jwt):
     all_chores = Chore.query.all()
 
     if len(all_chores) == 0:
@@ -33,7 +35,8 @@ def chores():
 
 
 @controller_bp.route('/chores', methods=['POST'])
-def create_chores():
+@requires_auth('post:chores')
+def create_chores(jwt):
     description = request.json.get('description')
     cost = request.json.get('cost')
     area = request.json.get('area')
@@ -61,7 +64,8 @@ def create_chores():
 
 
 @controller_bp.route('/chores/<chore_id>', methods=['DELETE'])
-def delete_chore(chore_id):
+@requires_auth('delete:chores')
+def delete_chore(jwt, chore_id):
     error = False
 
     chore = Chore.query.filter_by(id=chore_id).first_or_404()
@@ -85,7 +89,8 @@ def delete_chore(chore_id):
 
 
 @controller_bp.route('/chores/<chore_id>', methods=['PATCH'])
-def update_chore(chore_id):
+@requires_auth('patch:chores')
+def update_chore(jwt, chore_id):
     error = False
     try:
         chore = Chore.query.filter_by(id=chore_id).first_or_404()
@@ -122,7 +127,8 @@ def update_chore(chore_id):
 
 
 @controller_bp.route('/areas', methods=['GET'])
-def get_areas():
+@requires_auth('get:areas')
+def get_areas(jwt):
     all_areas = Area.query.all()
 
     if len(all_areas) == 0:
@@ -138,7 +144,8 @@ def get_areas():
 
 
 @controller_bp.route('/areas', methods=['POST'])
-def create_area():
+@requires_auth('post:areas')
+def create_area(jwt):
     name = request.json.get('name')
     try:
         new_area = Area(
@@ -161,7 +168,8 @@ def create_area():
 
 
 @controller_bp.route('/areas/<area_id>', methods=['DELETE'])
-def delete_area(area_id):
+@requires_auth('delete:areas')
+def delete_area(jwt, area_id):
     error = False
 
     area = Area.query.filter_by(id=area_id).first_or_404()
@@ -185,7 +193,8 @@ def delete_area(area_id):
 
 
 @controller_bp.route('/areas/<area_id>', methods=['PATCH'])
-def update_area(area_id):
+@requires_auth('patch:areas')
+def update_area(jwt, area_id):
     error = False
     try:
         area = Area.query.filter_by(id=area_id).first_or_404()
@@ -215,7 +224,8 @@ def update_area(area_id):
 
 
 @controller_bp.route('/workers', methods=['GET'])
-def get_workers():
+@requires_auth('get:workers')
+def get_workers(jwt):
     all_workers = Worker.query.all()
 
     if len(all_workers) == 0:
@@ -224,7 +234,6 @@ def get_workers():
     data = []
 
     for worker in all_workers:
-
         record = {
             'name': worker.name
         }
@@ -238,7 +247,8 @@ def get_workers():
 
 
 @controller_bp.route('/workers/<worker_id>', methods=['GET'])
-def get_single_worker(worker_id):
+@requires_auth('get:workers')
+def get_single_worker(jwt, worker_id):
     worker = Worker.query.filter_by(id=worker_id).first_or_404()
 
     data = []
@@ -267,7 +277,8 @@ def get_single_worker(worker_id):
 
 
 @controller_bp.route('/workers', methods=['POST'])
-def create_worker():
+@requires_auth('post:workers')
+def create_worker(jwt):
     name = request.json.get('name')
     try:
         new_worker = Worker(
@@ -289,7 +300,8 @@ def create_worker():
 
 
 @controller_bp.route('/workers/<worker_id>', methods=['DELETE'])
-def delete_worker(worker_id):
+@requires_auth('delete:workers')
+def delete_worker(jwt, worker_id):
     error = False
 
     worker = Worker.query.filter_by(id=worker_id).first_or_404()
@@ -313,7 +325,8 @@ def delete_worker(worker_id):
 
 
 @controller_bp.route('/workers/<worker_id>', methods=['PATCH'])
-def update_worker(worker_id):
+@requires_auth('patch:workers')
+def update_worker(jwt, worker_id):
     error = False
     try:
         worker = Worker.query.filter_by(id=worker_id).first_or_404()
@@ -343,7 +356,8 @@ def update_worker(worker_id):
 
 
 @controller_bp.route('/assigned-chores', methods=['GET'])
-def assigned_chores():
+@requires_auth('get:assigned-chores')
+def assigned_chores(jwt):
     all_assigned_chores = AssignedChore.query.all()
 
     if len(all_assigned_chores) == 0:
@@ -370,7 +384,8 @@ def assigned_chores():
 
 
 @controller_bp.route('/assigned-chores', methods=['POST'])
-def assign_chore():
+@requires_auth('post:assigned-chores')
+def assign_chore(jwt):
     chore = request.json.get('chore')
     chore = Chore.query.filter_by(description=chore).first_or_404()
     worker = request.json.get('worker')
@@ -398,7 +413,8 @@ def assign_chore():
 
 
 @controller_bp.route('/assigned-chores/<assigned_chore_id>', methods=['DELETE'])
-def delete_assigned_chore(assigned_chore_id):
+@requires_auth('delete:assigned-chores')
+def delete_assigned_chore(jwt, assigned_chore_id):
     error = False
 
     chore = AssignedChore.query.filter_by(id=assigned_chore_id).first_or_404()
@@ -422,11 +438,13 @@ def delete_assigned_chore(assigned_chore_id):
 
 
 @controller_bp.route('/assigned-chores/<assigned_chore_id>', methods=['PATCH'])
-def update_assigned_chore(assigned_chore_id):
+@requires_auth('patch:assigned-chores')
+def update_assigned_chore(jwt, assigned_chore_id):
     error = False
     try:
         assigned_chore = AssignedChore.query.filter_by(id=assigned_chore_id).first_or_404()
-        if request.json.get('worker') == "" or request.json.get('chore') == "" or request.json.get('duration') == "" or request.json.get('frequency') == "":
+        if request.json.get('worker') == "" or request.json.get('chore') == "" or request.json.get(
+                'duration') == "" or request.json.get('frequency') == "":
             abort(422)
 
         if request.json.get('worker'):
@@ -499,3 +517,40 @@ def server_error(error):
         "error": 500,
         "message": "Server error"
     }), 500
+
+
+@controller_bp.errorhandler(401)
+def invalid_token(error):
+    return jsonify({
+        "success": False,
+        "error": 401,
+        "message": "Token expired or incorrect claim."
+    }), 401
+
+
+@controller_bp.errorhandler(400)
+def invalid_header(error):
+    return jsonify({
+        "success": False,
+        "error": 400,
+        "message": "Invalid header"
+    }), 400
+
+
+@controller_bp.errorhandler(403)
+def unauthorized(error):
+    return jsonify({
+        "success": False,
+        "error": 403,
+        "message": "Unauthorized"
+    }), 403
+
+
+@controller_bp.errorhandler(AuthError)
+def handle_auth_error(ex):
+    """
+    Receive the raised authorization error and propagates it as response
+    """
+    response = jsonify(ex.error)
+    response.status_code = ex.status_code
+    return response
