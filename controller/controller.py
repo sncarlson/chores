@@ -24,7 +24,8 @@ def chores(jwt):
         record = {
             'area': chore.area.name,
             'cost': chore.cost,
-            'description': chore.description
+            'description': chore.description,
+            'id': chore.id
         }
         data.append(record)
     result = {
@@ -235,7 +236,8 @@ def get_workers(jwt):
 
     for worker in all_workers:
         record = {
-            'name': worker.name
+            'name': worker.name,
+            'id': worker.id
         }
         data.append(record)
 
@@ -265,6 +267,7 @@ def get_single_worker(jwt, worker_id):
         worker_chores.append(chore_record)
     record = {
         'name': worker.name,
+        'id': worker.id,
         'chores': worker_chores
     }
     data.append(record)
@@ -372,7 +375,8 @@ def assigned_chores(jwt):
             'wage': chore.chore.cost,
             'worker': chore.worker.name,
             'duration': chore.duration,
-            'frequency': chore.frequency
+            'frequency': chore.frequency,
+            'id': chore.id
         }
         data.append(record)
 
@@ -479,7 +483,8 @@ def update_assigned_chore(jwt, assigned_chore_id):
         'wage': assigned_chore.chore.cost,
         'worker': assigned_chore.worker.name,
         'duration': assigned_chore.duration,
-        'frequency': assigned_chore.frequency
+        'frequency': assigned_chore.frequency,
+        'id': assigned_chore.id
     }
     data.append(record)
 
