@@ -38,6 +38,10 @@ flask run
 
 # API Reference.
 
+Base URL for Heroku Deployment:
+
+https://chore-api-backend.herokuapp.com/
+
 Base URL for development environment:
 
 http://localhost:5000
@@ -73,24 +77,46 @@ GET '/chores'
 {
   "chores": [
     {
-      "area": "Kitchen",
-      "cost": 0.5,
-      "description": "Test Chore 1"
+      "area": "Bedroom",
+      "cost": 3.75,
+      "description": "Test Chore 1",
+      "id": 1
     },
     {
       "area": "Kitchen",
-      "cost": 0.5,
-      "description": "Test Chore 3"
+      "cost": 1.75,
+      "description": "Test Chore 2",
+      "id": 2
+    },
+    {
+      "area": "Garage",
+      "cost": 1.75,
+      "description": "Test Chore 3",
+      "id": 3
     },
     {
       "area": "Lawn",
-      "cost": 0.75,
-      "description": "Test Chore 4"
+      "cost": 5.0,
+      "description": "Test Chore 4",
+      "id": 4
     },
     {
-      "area": "Bathroom",
+      "area": "Laundry Room",
+      "cost": 1.0,
+      "description": "Test Chore 5",
+      "id": 5
+    },
+    {
+      "area": "Bedroom",
       "cost": 0.76,
-      "description": "Test Chore 5"
+      "description": "Test Chore 6 Patch 1",
+      "id": 6
+    },
+    {
+      "area": "Bedroom",
+      "cost": 1.0,
+      "description": "Test Chore 7",
+      "id": 9
     }
   ],
   "success": true
@@ -144,21 +170,42 @@ GET '/areas'
 - Returns success: Returns an array of dictionaries with area information as follows:
 
 {
-  "chores": [
+  "areas": [
     {
-      "area": "Kitchen",
-      "cost": 0.75,
-      "description": "Test Chore 1"
+      "id": 2,
+      "name": "Kitchen"
     },
     {
-      "area": "Garage",
-      "cost": 1.75,
-      "description": "Test Chore 2"
+      "id": 3,
+      "name": "Bathroom 1"
     },
     {
-      "area": "Laundry Room",
-      "cost": 1.85,
-      "description": "Test Chore 3"
+      "id": 4,
+      "name": "Bathroom 2"
+    },
+    {
+      "id": 5,
+      "name": "Garage"
+    },
+    {
+      "id": 6,
+      "name": "Lawn"
+    },
+    {
+      "id": 7,
+      "name": "Laundry Room"
+    },
+    {
+      "id": 8,
+      "name": "Bedroom"
+    },
+    {
+      "id": 9,
+      "name": "Bedroom 2"
+    },
+    {
+      "id": 1,
+      "name": "Test Area 1 Patch 2"
     }
   ],
   "success": true
@@ -211,13 +258,20 @@ GET '/workers'
   "success": true,
   "workers": [
     {
+      "id": 1,
       "name": "Test Worker 1"
     },
     {
+      "id": 2,
       "name": "Test Worker 2"
     },
     {
+      "id": 3,
       "name": "Test Worker 3"
+    },
+    {
+      "id": 4,
+      "name": "Test Worker 4 Patch 2"
     }
   ]
 }
@@ -233,20 +287,21 @@ GET '/workers/<worker_id>'
     {
       "chores": [
         {
-          "area": "Laundry Room",
-          "description": "Test Chore 3",
-          "duration": "Two months",
-          "frequency": "Every other day",
-          "wage": 1.85
+          "area": "Kitchen",
+          "description": "Test Chore 2",
+          "duration": "One Week",
+          "frequency": "Twice a day",
+          "wage": 1.75
         },
         {
           "area": "Garage",
-          "description": "Test Chore 2",
+          "description": "Test Chore 3",
           "duration": "One Week",
           "frequency": "Twice a day",
           "wage": 1.75
         }
       ],
+      "id": 2,
       "name": "Test Worker 2"
     }
   ]
@@ -366,24 +421,4 @@ PATCH '/assigned-chores/<assigned_chore_id>'
 ```
 
 
-## Introduction
-## Getting Started
-### Base URL
-### API Keys /Authentication (if applicable)
-## Errors
-### Response codes
-### Messages
-### Error types
-## Resource endpoint library
-### Organized by resource
-### Include each endpoint
-### Sample request
-### Arguments including data types
-### Response object including status codes and data types
 
-
-# Deployment (if applicable)
-
-# Authors
-
-# Acknowledgements

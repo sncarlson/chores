@@ -262,7 +262,8 @@ def get_single_worker(jwt, worker_id):
             'area': worker_chore.chore.area.name,
             'wage': worker_chore.chore.cost,
             'frequency': worker_chore.frequency,
-            'duration': worker_chore.duration
+            'duration': worker_chore.duration,
+            'id': worker_chore.id
         }
         worker_chores.append(chore_record)
     record = {
