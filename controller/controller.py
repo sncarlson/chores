@@ -378,7 +378,7 @@ def assigned_chores(jwt):
 
     result = {
         "success": True,
-        "assigned-chores": data
+        "chores": data
     }
     return jsonify(result)
 
@@ -488,7 +488,7 @@ def update_assigned_chore(jwt, assigned_chore_id):
     else:
         return jsonify({
             "success": True,
-            "assigned-chore": data
+            "chores": data
         })
 
 
