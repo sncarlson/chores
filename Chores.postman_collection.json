@@ -1,0 +1,1518 @@
+{
+	"info": {
+		"_postman_id": "5881ecd0-6dcf-431a-b8a4-609a8959ef1e",
+		"name": "Chores",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Public",
+			"item": [
+				{
+					"name": "/chores",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9e9a3253-d7b9-41c3-a098-e27382470488",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/chores",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"chores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/areas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4b2881ba-7ea5-4535-9706-1c5a404fde2b",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/areas",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"areas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/workers Single",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1d697ba6-8aab-444e-8cbf-2f3333afe850",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/workers/2",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"workers",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/workers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3d351707-3680-4ee5-b704-7ba00a294ce2",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/workers",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"workers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/assigned-chores",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1e12f2a4-5be3-483e-a136-39d7c0981e1f",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/assigned-chores",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"assigned-chores"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Worker",
+			"item": [
+				{
+					"name": "/chores",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "36013877-affd-4393-83aa-ea4e7c67970d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains chores array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.chores).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/chores",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"chores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/chores",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fb9251ec-0235-40e8-9372-9045a4ca2702",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"Test Chore 12\",\n    \"cost\": 0.75,\n    \"area\": \"Bedroom\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/chores",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"chores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/areas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "10cf6550-ca19-4f9b-b2c3-c821f1c976a7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains areas array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.areas).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/areas",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"areas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/areas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fdecde6b-5806-4f96-aa1e-26c30f7a44ef",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Area 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/areas",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"areas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/workers Single",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "919df52f-9a85-4c91-a87b-111d8f32bece",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains workers array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.workers).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/workers/2",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"workers",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/workers Single 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "45194b8e-a35e-4396-9deb-c624c5191522",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/workers/200",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"workers",
+								"200"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/workers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d4da0826-4fd8-4461-9315-8021eef3ec40",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains workers array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.workers).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/workers",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"workers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/workers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f863755e-d6bb-44c5-af90-aa4d128df07f",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Worker 5\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/workers",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"workers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/assigned-chores",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7dfe8787-f873-4597-8318-2ccdfe7ce4c2",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains chores array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.chores).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/assigned-chores",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"assigned-chores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/assigned-chores",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a1f347c6-f581-4a4c-9597-0dc699a8dca8",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"worker\": \"Test Worker 4 Patch 2\",\n    \"chore\": \"Test Chore 4\",\n    \"duration\": \"One Week\",\n    \"frequency\": \"Twice a day\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/assigned-chores",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"assigned-chores"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InVsZTRHWVhLRlYxS2RydVFUQnVQeSJ9.eyJpc3MiOiJodHRwczovL2Rldi03ODR5ZWMyZi51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWY0MTBiZGJmZTQ1MjcwMDZkOTNhZDhlIiwiYXVkIjoiY2hvcmVzIiwiaWF0IjoxNTk4MTAwOTQ5LCJleHAiOjE1OTgxODczNDksImF6cCI6IlZtMUpIYnFhckthTFpBc2ljNktXVEtZZHJ6dDVRcFhHIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJnZXQ6YXJlYXMiLCJnZXQ6YXNzaWduZWQtY2hvcmVzIiwiZ2V0OmNob3JlcyIsImdldDp3b3JrZXJzIl19.lFm0Xrli4nuOM46wxf2JnG0YnxPOs50vdLcj3cSzcimAqwYxSbEhmtaFIFVD2M0xfrwWL2_I3qKaP05slbeHq4ecSMH8_Xfo6DzzItq4e1ZiKEic2scvN1pMqBl1VPSJk2DFCOpZYdozba-oomZYB6WzfHluBlLFzMegFoRfZpS5GxTbDKpM8CnKLkDDMK8u-6cM1g20JSTa8XbrBU-d5xV5rCy51LFs004DzlRkCoroQcXWrmvzFFHe5wQx1JzlrerKwD_j5e-zL5C1FSAKfpapO6IVNaMAd_2eqIfJiJmUA5wO3ZSj5TazHE8Qan9v9vWes7uLp0Ce52_qfFFXCg",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4aa6b560-ad01-4fe8-b3b7-1eff6b8a14e0",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "09d92511-ed2a-4d2b-8bc5-ace6941411d5",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "/chores",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "56322787-ee91-42e8-8f4b-13b07e3575f0",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains chores array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.chores).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/chores",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"chores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/chores",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "59bc7951-a4b9-4de2-ae1f-14189ade5eda",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"Test Chore 7\",\n    \"cost\": 1.00,\n    \"area\": \"Bedroom\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/chores",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"chores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/chores",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eb3ee7bd-9566-4b76-88a5-70e3ce613165",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains chores array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.chores).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"Test Chore 6 Patch 1\",\n    \"cost\": 0.76,\n    \"area\": \"Bedroom\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/chores/6",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"chores",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/chores",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "73112242-e840-4762-ba7a-07b8826902c7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/chores/11",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"chores",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/areas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3fc2e7d1-0aa3-451c-86fc-2d5285874ddd",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Area 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/areas",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"areas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/areas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "16398968-4654-4e3c-82ee-447081a91a3b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains areas array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.areas).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/areas",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"areas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/areas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f3a09fa7-989f-4ee2-9ad5-2f0350650a40",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains areas array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.areas).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Area 1 Patch 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/areas/1",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"areas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/areas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6f4005a8-16ee-4440-abc5-0d54f77c16f8",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/areas/15",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"areas",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/workers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0b344c2d-3d31-49df-86d7-2c532fb12a4c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Worker 5\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/workers",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"workers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/workers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6687b14c-1c05-403e-b7e9-5489e96a51e4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/workers/9",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"workers",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/workers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "576615e3-fcb9-4431-ae18-a30aebe6f590",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains workers array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.worker).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Worker 4 Patch 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/workers/4",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"workers",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/workers Single",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8262da4d-ee06-4b32-b7d8-6e7bd07e1d68",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains workers array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.workers).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/workers/2",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"workers",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/workers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f72dbe68-5eba-4fca-b1e8-899aa97b4ad0",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains workers array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.workers).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/workers",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"workers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/assigned-chores",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b450c12a-d74b-4319-aee0-8e0bfcb94f3b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"worker\": \"Test Worker 4 Patch 2\",\n    \"chore\": \"Test Chore 4\",\n    \"duration\": \"One Week\",\n    \"frequency\": \"Twice a day\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/assigned-chores",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"assigned-chores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/assigned-chores",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f424c773-1714-484a-b3d2-57ee144400eb",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains chores array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.chores).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/assigned-chores",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"assigned-chores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/assigned-chores",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "90381857-a2c8-4003-8423-fdbfed9f1d45",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains chores array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.chores).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n    \"duration\": \"Two years\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/assigned-chores/4",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"assigned-chores",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/assigned-chores",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "307a458b-243a-4224-898e-a3cf3af02c52",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://chore-api-backend.herokuapp.com/assigned-chores/9",
+							"protocol": "https",
+							"host": [
+								"chore-api-backend",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"assigned-chores",
+								"9"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InVsZTRHWVhLRlYxS2RydVFUQnVQeSJ9.eyJpc3MiOiJodHRwczovL2Rldi03ODR5ZWMyZi51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWY0MTBjMDZhMWI0MWYwMDY3ODIxMGI5IiwiYXVkIjoiY2hvcmVzIiwiaWF0IjoxNTk4MTAwODQyLCJleHAiOjE1OTgxODcyNDIsImF6cCI6IlZtMUpIYnFhckthTFpBc2ljNktXVEtZZHJ6dDVRcFhHIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YXJlYXMiLCJkZWxldGU6YXNzaWduZWQtY2hvcmVzIiwiZGVsZXRlOmNob3JlcyIsImRlbGV0ZTp3b3JrZXJzIiwiZ2V0OmFyZWFzIiwiZ2V0OmFzc2lnbmVkLWNob3JlcyIsImdldDpjaG9yZXMiLCJnZXQ6d29ya2VycyIsInBhdGNoOmFyZWFzIiwicGF0Y2g6YXNzaWduZWQtY2hvcmVzIiwicGF0Y2g6Y2hvcmVzIiwicGF0Y2g6d29ya2VycyIsInBvc3Q6YXJlYXMiLCJwb3N0OmFzc2lnbmVkLWNob3JlcyIsInBvc3Q6Y2hvcmVzIiwicG9zdDp3b3JrZXJzIl19.CcOEMc6iJb0yOHf1h6-U0lEFhr97X6ab2D9JwZhTTGAS4A34E1LqjuRSSlQO86i3XaUWjXtOrmDzukZmcE-eKQHEcfQYkqjao5Kgyg7NsriqbMPy7oaZEcgZv7XucAoHOEc7rFqBXqcTmTctdh2aONU8wMlJ7_BfR1oeAKcUHfYnU8EqlkbYMnmy1WukqkAf8W2LT18K9WiYjQNIe6wc7KXY4WAArwhl5gU8xfUHBb3HuVKxpGQ2M1nVTDwRj-wpIO93mm-MSmQJDUmPx6ZyrfodKJKidqJNDXSaWFk4sVOMf19ByolY7xCzfv3ym-h6axeM81mnViGyrpohWY7OhA",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d23b76ce-a38d-4070-a530-803ecac2f76c",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "cfc577e1-a422-4659-be5e-2864378d9d57",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

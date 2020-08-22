@@ -35,6 +35,23 @@ export FLASK_ENV=development
 flask run
 ```
 
+### For Heroku
+Base URL for Heroku Deployment:
+
+https://chore-api-backend.herokuapp.com/
+
+A Postman collection with valid tokens will be provided to test the service.
+
+Please import the Chores.postman_collection.json that is available in the root of the git repository.  You'll find three separate categories of tests: Public, Worker, and Admin.
+
+Each category illustrates either functional authentication and RBAC usage or the functionality of each endpoint in the case of the Admin category.  
+
+# RBAC Controls and Permissions
+There are two roles for the chores service: Admin and Worker.  If a user is not authenticated, the service unauthorized.
+
+For the Worker role, the user will only be able to GET each end point.
+
+The Admin role has permissions to GET, POST, PATCH, and DELETE each end point.
 
 # API Reference.
 
@@ -291,6 +308,7 @@ GET '/workers/<worker_id>'
           "description": "Test Chore 2",
           "duration": "One Week",
           "frequency": "Twice a day",
+          "id": 2,
           "wage": 1.75
         },
         {
@@ -298,6 +316,7 @@ GET '/workers/<worker_id>'
           "description": "Test Chore 3",
           "duration": "One Week",
           "frequency": "Twice a day",
+          "id": 3,
           "wage": 1.75
         }
       ],
@@ -351,30 +370,42 @@ GET '/assigned-chores'
 - Returns success: Returns an array of dictionaries with worker information as follows:
 
 {
-  "assigned-chores": [
+  "chores": [
     {
       "area": "Bedroom",
-      "chore": "Test Chore 4 Patch",
-      "duration": "One month",
-      "frequency": "Daily",
-      "wage": 0.76,
-      "worker": "Test Worker 3 Patch"
+      "chore": "Test Chore 1",
+      "duration": "One Week",
+      "frequency": "Twice a day",
+      "id": 1,
+      "wage": 3.75,
+      "worker": "Test Worker 1"
     },
     {
-      "area": "Laundry Room",
-      "chore": "Test Chore 3",
-      "duration": "Two months",
-      "frequency": "Every other day",
-      "wage": 1.85,
+      "area": "Kitchen",
+      "chore": "Test Chore 2",
+      "duration": "One Week",
+      "frequency": "Twice a day",
+      "id": 2,
+      "wage": 1.75,
       "worker": "Test Worker 2"
     },
     {
       "area": "Garage",
-      "chore": "Test Chore 2",
+      "chore": "Test Chore 3",
       "duration": "One Week",
       "frequency": "Twice a day",
+      "id": 3,
       "wage": 1.75,
       "worker": "Test Worker 2"
+    },
+    {
+      "area": "Lawn",
+      "chore": "Test Chore 4",
+      "duration": "One Week",
+      "frequency": "Twice a day",
+      "id": 4,
+      "wage": 5.0,
+      "worker": "Test Worker 3"
     }
   ],
   "success": true
