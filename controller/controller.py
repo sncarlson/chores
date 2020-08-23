@@ -3,6 +3,7 @@ import sys
 from flask import Blueprint, jsonify, abort, request
 from model.models import Area, Chore, Worker, AssignedChore, db
 from auth.auth import AuthError, requires_auth
+from sqlalchemy import exc
 
 # Blueprint Configuration
 controller_bp = Blueprint(
@@ -50,8 +51,8 @@ def create_chores(jwt):
         )
         new_chore.insert()
 
-    except:
-        print(sys.exc_info())
+    except exc.SQLAlchemyError:
+        print(sys.exc_info()[0])
     finally:
         db.session.close()
 
@@ -73,10 +74,10 @@ def delete_chore(jwt, chore_id):
     try:
         chore.delete()
         db.session.commit()
-    except:
+    except exc.SQLAlchemyError:
         error = True
         db.session.rollback()
-        print(sys.exe_info())
+        print(sys.exe_info()[0])
     finally:
         db.session.close()
 
@@ -95,7 +96,9 @@ def update_chore(jwt, chore_id):
     error = False
     try:
         chore = Chore.query.filter_by(id=chore_id).first_or_404()
-        if request.json.get('description') == "" or request.json.get('cost') == "" or request.json.get('area') == "":
+        if request.json.get('description') == "" or \
+                request.json.get('cost') == "" or \
+                request.json.get('area') == "":
             abort(422)
 
         if request.json.get('description'):
@@ -105,16 +108,17 @@ def update_chore(jwt, chore_id):
             chore.cost = request.json.get('cost')
 
         if request.json.get('area'):
-            area = Area.query.filter_by(name=request.json.get('area')).first_or_404()
+            area = Area.query.filter_by(name=request.json.get('area'))\
+                    .first_or_404()
             chore.area_id = area.id
 
         chore.update()
         chore = Chore.query.filter_by(id=chore_id).first_or_404()
 
-    except:
+    except exc.SQLAlchemyError:
         error = True
         db.session.rollback()
-        print(sys.exc_info())
+        print(sys.exc_info()[0])
     finally:
         db.session.close()
 
@@ -154,8 +158,8 @@ def create_area(jwt):
         )
         new_area.insert()
 
-    except:
-        print(sys.exc_info())
+    except exc.SQLAlchemyError:
+        print(sys.exc_info()[0])
     finally:
         db.session.close()
 
@@ -177,10 +181,10 @@ def delete_area(jwt, area_id):
     try:
         area.delete()
         db.session.commit()
-    except:
+    except exc.SQLAlchemyError:
         error = True
         db.session.rollback()
-        print(sys.exe_info())
+        print(sys.exe_info()[0])
     finally:
         db.session.close()
 
@@ -208,10 +212,10 @@ def update_area(jwt, area_id):
         area.update()
         area = Area.query.filter_by(id=area_id).first_or_404()
 
-    except:
+    except exc.SQLAlchemyError:
         error = True
         db.session.rollback()
-        print(sys.exc_info())
+        print(sys.exc_info()[0])
     finally:
         db.session.close()
 
@@ -290,8 +294,8 @@ def create_worker(jwt):
         )
         new_worker.insert()
 
-    except:
-        print(sys.exc_info())
+    except exc.SQLAlchemyError:
+        print(sys.exc_info()[0])
     finally:
         db.session.close()
 
@@ -312,10 +316,10 @@ def delete_worker(jwt, worker_id):
     try:
         worker.delete()
         db.session.commit()
-    except:
+    except exc.SQLAlchemyError:
         error = True
         db.session.rollback()
-        print(sys.exe_info())
+        print(sys.exe_info()[0])
     finally:
         db.session.close()
 
@@ -343,10 +347,10 @@ def update_worker(jwt, worker_id):
         worker.update()
         worker = Worker.query.filter_by(id=worker_id).first_or_404()
 
-    except:
+    except exc.SQLAlchemyError:
         error = True
         db.session.rollback()
-        print(sys.exc_info())
+        print(sys.exc_info()[0])
     finally:
         db.session.close()
 
@@ -407,8 +411,8 @@ def assign_chore(jwt):
         )
         new_assigned_chore.insert()
 
-    except:
-        print(sys.exc_info())
+    except exc.SQLAlchemyError:
+        print(sys.exc_info()[0])
     finally:
         db.session.close()
 
@@ -417,7 +421,8 @@ def assign_chore(jwt):
     })
 
 
-@controller_bp.route('/assigned-chores/<assigned_chore_id>', methods=['DELETE'])
+@controller_bp.route('/assigned-chores/<assigned_chore_id>',
+                     methods=['DELETE'])
 @requires_auth('delete:assigned-chores')
 def delete_assigned_chore(jwt, assigned_chore_id):
     error = False
@@ -426,10 +431,10 @@ def delete_assigned_chore(jwt, assigned_chore_id):
     try:
         chore.delete()
         db.session.commit()
-    except:
+    except exc.SQLAlchemyError:
         error = True
         db.session.rollback()
-        print(sys.exe_info())
+        print(sys.exe_info()[0])
     finally:
         db.session.close()
 
@@ -442,22 +447,28 @@ def delete_assigned_chore(jwt, assigned_chore_id):
         })
 
 
-@controller_bp.route('/assigned-chores/<assigned_chore_id>', methods=['PATCH'])
+@controller_bp.route('/assigned-chores/<assigned_chore_id>',
+                     methods=['PATCH'])
 @requires_auth('patch:assigned-chores')
 def update_assigned_chore(jwt, assigned_chore_id):
     error = False
     try:
-        assigned_chore = AssignedChore.query.filter_by(id=assigned_chore_id).first_or_404()
-        if request.json.get('worker') == "" or request.json.get('chore') == "" or request.json.get(
-                'duration') == "" or request.json.get('frequency') == "":
+        assigned_chore = AssignedChore.query.filter_by(id=assigned_chore_id)\
+            .first_or_404()
+        if request.json.get('worker') == "" \
+                or request.json.get('chore') == "" \
+                or request.json.get('duration') == "" \
+                or request.json.get('frequency') == "":
             abort(422)
 
         if request.json.get('worker'):
-            worker = Worker.query.filter_by(name=request.json.get('worker')).first_or_404()
+            worker = Worker.query.filter_by(name=request.json.get('worker'))\
+                .first_or_404()
             assigned_chore.worker_id = worker.id
 
         if request.json.get('chore'):
-            chore = Chore.query.filter_by(description=request.json.get('chore')).first_or_404()
+            chore = Chore.query.\
+                filter_by(description=request.json.get('chore')).first_or_404()
             assigned_chore.chore_id = chore.id
 
         if request.json.get('duration'):
@@ -468,14 +479,15 @@ def update_assigned_chore(jwt, assigned_chore_id):
 
         assigned_chore.update()
 
-    except:
+    except exc.SQLAlchemyError:
         error = True
         db.session.rollback()
-        print(sys.exc_info())
+        print(sys.exc_info()[0])
     finally:
         db.session.close()
 
-    assigned_chore = AssignedChore.query.filter_by(id=assigned_chore_id).first_or_404()
+    assigned_chore = AssignedChore.query.filter_by(id=assigned_chore_id)\
+        .first_or_404()
     data = []
 
     record = {

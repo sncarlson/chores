@@ -1,4 +1,5 @@
-# TODO Auth0 is set up and running at the time of submission. All required configuration
+# TODO Auth0 is set up and running at the time of submission.
+#  All required configuration
 #  settings are included in a bash file which export:
 
 # TODO The Auth0 Domain Name
@@ -6,18 +7,21 @@
 # TODO The Auth0 Client ID
 
 # TODO Roles and permission tables are configured in Auth0.
-# TODO Access of roles is limited. Includes at least two different roles with different permissions.
+# TODO Access of roles is limited. Includes at least two different
+#  roles with different permissions.
 # TODO The JWT includes the RBAC permission claims.
 
 import json
+import os
+
 from flask import request, _request_ctx_stack, abort
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
 
-AUTH0_DOMAIN = 'dev-784yec2f.us.auth0.com'
-ALGORITHMS = ['RS256']
-API_AUDIENCE = 'chores'
+AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
+ALGORITHMS = os.environ['ALGORITHMS']
+API_AUDIENCE = os.environ['API_AUDIENCE']
 
 # AuthError Exception
 '''
@@ -35,7 +39,9 @@ class AuthError(Exception):
 # Auth Header
 
 
-# Retrieved from: https://auth0.com/docs/quickstart/backend/python/01-authorization on 27 Jul 2020
+# Retrieved from:
+# https://auth0.com/docs/quickstart/backend/python/01-authorization
+# on 27 Jul 2020
 def get_token_auth_header():
     """Obtains the Access Token from the Authorization Header
         """
@@ -82,7 +88,8 @@ def check_permissions(permission, payload):
     return True
 
 
-# Retrieved from the Udacity course content: Practice - Validating Auth0 Tokens on 27 Jul 2020
+# Retrieved from the Udacity
+# course content: Practice - Validating Auth0 Tokens on 27 Jul 2020
 def verify_decode_jwt(token):
     # GET THE PUBLIC KEY FROM AUTH0
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
@@ -132,7 +139,7 @@ def verify_decode_jwt(token):
         except jwt.JWTClaimsError:
             raise AuthError({
                 'code': 'invalid_claims',
-                'description': 'Incorrect claims. Please, check the audience and issuer.'
+                'description': 'Incorrect claims.'
             }, 401)
         except Exception:
             raise AuthError({
@@ -152,7 +159,7 @@ def requires_auth(permission=''):
             token = get_token_auth_header()
             try:
                 payload = verify_decode_jwt(token)
-            except:
+            except Exception:
                 abort(401)
             check_permissions(permission, payload)
             return f(payload, *args, **kwargs)

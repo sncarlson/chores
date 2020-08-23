@@ -1,9 +1,11 @@
 # TODO Use of correct data types for fields
 # TODO Use of primary and optional foreign key ids
 
-# TODO Does not use raw SQL or only where there are not SQLAlchemy equivalent expressions
+# TODO Does not use raw SQL or only where there are
+#  not SQLAlchemy equivalent expressions
 # TODO Correctly formats SQLAlchemy to define models
-# TODO Creates methods to serialize model data and helper methods to simplify API behavior
+# TODO Creates methods to serialize model data and
+#  methods to simplify API behavior
 #  such as insert, update and delete.
 
 from flask_sqlalchemy import SQLAlchemy
@@ -26,7 +28,8 @@ class Chore(db.Model):
     description = db.Column(db.String(120), nullable=False)
     cost = db.Column(db.Float, nullable=False)
     area_id = db.Column(db.Integer, db.ForeignKey('Area.id'), nullable=False)
-    assigned_chores = relationship('AssignedChore', backref='chore', lazy=True, cascade="all, delete")
+    assigned_chores = relationship('AssignedChore', backref='chore',
+                                   lazy=True, cascade="all, delete")
 
     def __init__(self, description, cost, area_id):
         self.description = description
@@ -57,7 +60,8 @@ class Area(db.Model):
     __tablename__ = 'Area'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=True, nullable=False)
-    chores = relationship('Chore', backref='area', lazy=True, cascade="all, delete")
+    chores = relationship('Chore', backref='area',
+                          lazy=True, cascade="all, delete")
 
     def __init__(self, name):
         self.name = name
@@ -84,7 +88,8 @@ class Worker(db.Model):
     __tablename__ = 'Worker'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=True, nullable=False)
-    assigned_chores = relationship('AssignedChore', backref='worker', lazy=True)
+    assigned_chores = relationship('AssignedChore',
+                                   backref='worker', lazy=True)
 
     def __init__(self, name):
         self.name = name
@@ -111,7 +116,8 @@ class AssignedChore(db.Model):
     __tablename__ = 'AssignedChore'
     id = db.Column(db.Integer, primary_key=True)
     chore_id = db.Column(db.Integer, db.ForeignKey('Chore.id'), nullable=False)
-    worker_id = db.Column(db.Integer, db.ForeignKey('Worker.id'), nullable=False)
+    worker_id = db.Column(db.Integer,
+                          db.ForeignKey('Worker.id'), nullable=False)
     duration = db.Column(db.String(120), nullable=False)
     frequency = db.Column(db.String(120), nullable=False)
 
