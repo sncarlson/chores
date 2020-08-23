@@ -50,38 +50,9 @@ class ChoresTestCase(unittest.TestCase):
             from controller import controller
             self.app.register_blueprint(controller.controller_bp)
 
-        self.AdminToken = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXV" \
-                          "CIsImtpZCI6InVsZTRHWVhLRlYxS2RydV" \
-                          "FUQnVQeSJ9.eyJpc3MiOiJodHRwczovL2" \
-                          "Rldi03ODR5ZWMyZi51cy5hdXRoMC5jb20v" \
-                          "Iiwic3ViIjoiYXV0aDB8NWY0MTBjMDZhMW" \
-                          "I0MWYwMDY3ODIxMGI5IiwiYXVkIjoiY" \
-                          "2hvcmVzIiwiaWF0IjoxNTk4MjA3MTg2L" \
-                          "CJleHAiOjE1OTgyOTM1ODYsImF6cCI6Il" \
-                          "ZtMUpIYnFhckthTFpBc2ljNktXVEtZZHJ6" \
-                          "dDVRcFhHIiwic2NvcGUiOiIiLCJwZXJtaX" \
-                          "NzaW9ucyI6WyJkZWxldGU6YXJlYXMiLCJ" \
-                          "kZWxldGU6YXNzaWduZWQtY2hvcmVzIiwiZ" \
-                          "GVsZXRlOmNob3JlcyIsImRlbGV0ZTp3b3" \
-                          "JrZXJzIiwiZ2V0OmFyZWFzIiwiZ2V0Om" \
-                          "Fzc2lnbmVkLWNob3JlcyIsImdldDpjaG9" \
-                          "yZXMiLCJnZXQ6d29ya2VycyIsInBhdGNo" \
-                          "OmFyZWFzIiwicGF0Y2g6YXNzaWduZWQ" \
-                          "tY2hvcmVzIiwicGF0Y2g6Y2hvcmVzIiw" \
-                          "icGF0Y2g6d29ya2VycyIsInBvc3Q6YXJ" \
-                          "lYXMiLCJwb3N0OmFzc2lnbmVkLWNob3Jl" \
-                          "cyIsInBvc3Q6Y2hvcmVzIiwicG9zdDp3b3" \
-                          "JrZXJzIl19.uAbxA7bjXhRo5WM78sInPHB" \
-                          "oIlJpvlZiiOjTs0nd6LN1V15B4eGtV5EE" \
-                          "8Xo9iMTe_9RVKgIa2L5Rh9vJeNoz2boRj" \
-                          "Uf6WVPSiaFtMj4E7gxG8Y45kYiyvmOi3u" \
-                          "qJJCluAUsKEDuXWBqIYDNGLEw_U4_tqBI" \
-                          "yqVVts5Rh-g6EneB8CsDLqlrcpeMPmM4i" \
-                          "YLrRJq1ZvizjzwO8b2htVw6tNKwtz4l3p4" \
-                          "VDyWy3I7vt5M_4Cd1PkapdJK6nboc4q-ca" \
-                          "JCqAtxe8u7ZgE17BQSQb2gLvGzEwU6gwc" \
-                          "PtQhFh4z0w_u-VJHSeVmcPOAbQbck4gTg" \
-                          "oAaFSMgzSa6jdFsvpe-g"
+        self.WorkerToken = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InVsZTRHWVhLRlYxS2RydVFUQnVQeSJ9.eyJpc3MiOiJodHRwczovL2Rldi03ODR5ZWMyZi51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWY0MTBiZGJmZTQ1MjcwMDZkOTNhZDhlIiwiYXVkIjoiY2hvcmVzIiwiaWF0IjoxNTk4MjA3Mjk1LCJleHAiOjE1OTgyOTM2OTUsImF6cCI6IlZtMUpIYnFhckthTFpBc2ljNktXVEtZZHJ6dDVRcFhHIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJnZXQ6YXJlYXMiLCJnZXQ6YXNzaWduZWQtY2hvcmVzIiwiZ2V0OmNob3JlcyIsImdldDp3b3JrZXJzIl19.Kiwg-ytdQJLc4_f9G7khGT-PZjoMt3cTPN0Gt1ZaVcrXpusPpOGxUrZsOwW2aiDlm-REbcrtHTbFN-SSXd2IRGU-CV6LvacHtkJURDN_-RsjZK7XxJDF6SP67WqEoUeEmIx0c1rSCP5kiZqaiukJ2Jip3gdU2fCT-oVKjCTxVMLMG1dnekHTK7lc89_gIQDDLmwVHj0azhqSuYElyR1pZY0rs05D9RlVPejFOj3XhcCDBFaHwG64O6BCDEydXKWvtg5RgDuJNjXgjVHswNL-EdAmb4QpjN0Yc3vGkyJoTjOi_uvHLKPYozAixMUxwh2F9TQnaU5PB1fz17nzrEcWYg"
+
+        self.AdminToken = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InVsZTRHWVhLRlYxS2RydVFUQnVQeSJ9.eyJpc3MiOiJodHRwczovL2Rldi03ODR5ZWMyZi51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWY0MTBjMDZhMWI0MWYwMDY3ODIxMGI5IiwiYXVkIjoiY2hvcmVzIiwiaWF0IjoxNTk4MjA3MTg2LCJleHAiOjE1OTgyOTM1ODYsImF6cCI6IlZtMUpIYnFhckthTFpBc2ljNktXVEtZZHJ6dDVRcFhHIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YXJlYXMiLCJkZWxldGU6YXNzaWduZWQtY2hvcmVzIiwiZGVsZXRlOmNob3JlcyIsImRlbGV0ZTp3b3JrZXJzIiwiZ2V0OmFyZWFzIiwiZ2V0OmFzc2lnbmVkLWNob3JlcyIsImdldDpjaG9yZXMiLCJnZXQ6d29ya2VycyIsInBhdGNoOmFyZWFzIiwicGF0Y2g6YXNzaWduZWQtY2hvcmVzIiwicGF0Y2g6Y2hvcmVzIiwicGF0Y2g6d29ya2VycyIsInBvc3Q6YXJlYXMiLCJwb3N0OmFzc2lnbmVkLWNob3JlcyIsInBvc3Q6Y2hvcmVzIiwicG9zdDp3b3JrZXJzIl19.uAbxA7bjXhRo5WM78sInPHBoIlJpvlZiiOjTs0nd6LN1V15B4eGtV5EE8Xo9iMTe_9RVKgIa2L5Rh9vJeNoz2boRjUf6WVPSiaFtMj4E7gxG8Y45kYiyvmOi3uqJJCluAUsKEDuXWBqIYDNGLEw_U4_tqBIyqVVts5Rh-g6EneB8CsDLqlrcpeMPmM4iYLrRJq1ZvizjzwO8b2htVw6tNKwtz4l3p4VDyWy3I7vt5M_4Cd1PkapdJK6nboc4q-caJCqAtxe8u7ZgE17BQSQb2gLvGzEwU6gwcPtQhFh4z0w_u-VJHSeVmcPOAbQbck4gTgoAaFSMgzSa6jdFsvpe-g"
 
         # Setup data on first run
         # setup_data()
@@ -100,6 +71,25 @@ class ChoresTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertTrue(data['chores'])
 
+    def test_get_chores_with_no_jwt(self):
+        response = \
+            self.client() \
+                .get('/chores')
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 401)
+
+    def test_get_chores_with_worker_jwt(self):
+        response = \
+            self.client()\
+                .get('/chores',
+                     headers={"Authorization": 'Bearer ' + self.WorkerToken}, )
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['chores'])
+
     def test_add_chore(self):
         response = self\
             .client()\
@@ -112,6 +102,17 @@ class ChoresTestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['success'], True)
+
+    def test_add_chore_no_jwt(self):
+        response = self\
+            .client()\
+            .post('/chores',
+                  json={'description': 'Test Chore 5',
+                        'cost': 1.25,
+                        'area': 'Test Area 1'})
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 401)
 
     def test_add_chore_with_bad_area(self):
         response = self\
@@ -162,6 +163,15 @@ class ChoresTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertTrue(data['areas'])
 
+    def test_get_areas_no_jwt(self):
+        response = self\
+            .client()\
+            .get('/areas')
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 401)
+
+
     def test_add_area(self):
         response = self\
             .client()\
@@ -173,6 +183,16 @@ class ChoresTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertTrue(data['area'])
+
+    def test_add_area_with_worker_jwt(self):
+        response = self\
+            .client()\
+            .post('/areas',
+                  headers={"Authorization": 'Bearer ' + self.WorkerToken},
+                  json={'name': 'Test Area 5'})
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 403)
 
     def test_add_area_with_no_name(self):
         response = self\
