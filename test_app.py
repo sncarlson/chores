@@ -62,7 +62,7 @@ class ChoresTestCase(unittest.TestCase):
 
     def test_get_chores(self):
         response = \
-            self.client()\
+            self.client() \
                 .get('/chores',
                      headers={"Authorization": 'Bearer ' + self.AdminToken}, )
         data = json.loads(response.data)
@@ -81,7 +81,7 @@ class ChoresTestCase(unittest.TestCase):
 
     def test_get_chores_with_worker_jwt(self):
         response = \
-            self.client()\
+            self.client() \
                 .get('/chores',
                      headers={"Authorization": 'Bearer ' + self.WorkerToken}, )
         data = json.loads(response.data)
@@ -91,8 +91,8 @@ class ChoresTestCase(unittest.TestCase):
         self.assertTrue(data['chores'])
 
     def test_add_chore(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .post('/chores',
                   headers={"Authorization": 'Bearer ' + self.AdminToken},
                   json={'description': 'Test Chore 5',
@@ -104,8 +104,8 @@ class ChoresTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
 
     def test_add_chore_no_jwt(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .post('/chores',
                   json={'description': 'Test Chore 5',
                         'cost': 1.25,
@@ -115,8 +115,8 @@ class ChoresTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 401)
 
     def test_add_chore_with_bad_area(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .post('/chores',
                   headers={"Authorization": 'Bearer ' + self.AdminToken},
                   json={'description': 'Test Chore 6',
@@ -128,13 +128,13 @@ class ChoresTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
 
     def test_delete_chore(self):
-        chore = Chore\
-            .query\
+        chore = Chore \
+            .query \
             .filter(Chore.description
                     .ilike("%" + "Test Chore 5" + "%")).first()
 
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .delete('/chores/' + str(chore.id),
                     headers={"Authorization": 'Bearer ' + self.AdminToken})
         data = json.loads(response.data)
@@ -143,8 +143,8 @@ class ChoresTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
 
     def test_delete_chore_failure(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .delete('/chores/5000',
                     headers={"Authorization": 'Bearer ' + self.AdminToken})
         data = json.loads(response.data)
@@ -153,8 +153,8 @@ class ChoresTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
 
     def test_get_areas(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .get('/areas',
                  headers={"Authorization": 'Bearer ' + self.AdminToken})
         data = json.loads(response.data)
@@ -164,17 +164,16 @@ class ChoresTestCase(unittest.TestCase):
         self.assertTrue(data['areas'])
 
     def test_get_areas_no_jwt(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .get('/areas')
         data = json.loads(response.data)
 
         self.assertEqual(response.status_code, 401)
 
-
     def test_add_area(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .post('/areas',
                   headers={"Authorization": 'Bearer ' + self.AdminToken},
                   json={'name': 'Test Area 5'})
@@ -185,8 +184,8 @@ class ChoresTestCase(unittest.TestCase):
         self.assertTrue(data['area'])
 
     def test_add_area_with_worker_jwt(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .post('/areas',
                   headers={"Authorization": 'Bearer ' + self.WorkerToken},
                   json={'name': 'Test Area 5'})
@@ -195,8 +194,8 @@ class ChoresTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 403)
 
     def test_add_area_with_no_name(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .post('/areas',
                   headers={"Authorization": 'Bearer ' + self.AdminToken},
                   json={})
@@ -206,13 +205,13 @@ class ChoresTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
 
     def test_delete_area(self):
-        area = Area\
-            .query\
-            .filter(Area.name.ilike("%" + "Test Area 5" + "%"))\
+        area = Area \
+            .query \
+            .filter(Area.name.ilike("%" + "Test Area 5" + "%")) \
             .first()
 
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .delete('/areas/' + str(area.id),
                     headers={"Authorization": 'Bearer ' + self.AdminToken})
         data = json.loads(response.data)
@@ -221,8 +220,8 @@ class ChoresTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
 
     def test_delete_area_failure(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .delete('/areas/5000',
                     headers={"Authorization": 'Bearer ' + self.AdminToken})
         data = json.loads(response.data)
@@ -231,8 +230,8 @@ class ChoresTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
 
     def test_get_workers(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .get('/workers',
                  headers={"Authorization": 'Bearer ' + self.AdminToken})
         data = json.loads(response.data)
@@ -242,8 +241,8 @@ class ChoresTestCase(unittest.TestCase):
         self.assertTrue(data['workers'])
 
     def test_get_single_workers(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .get('/workers/1',
                  headers={"Authorization": 'Bearer ' + self.AdminToken})
         data = json.loads(response.data)
@@ -253,8 +252,8 @@ class ChoresTestCase(unittest.TestCase):
         self.assertTrue(data['workers'])
 
     def test_get_single_workers_bad_request(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .get('/workers/1000',
                  headers={"Authorization": 'Bearer ' + self.AdminToken})
         data = json.loads(response.data)
@@ -263,8 +262,8 @@ class ChoresTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
 
     def test_add_worker(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .post('/workers',
                   headers={"Authorization": 'Bearer ' + self.AdminToken},
                   json={'name': 'Test Worker 5'})
@@ -275,8 +274,8 @@ class ChoresTestCase(unittest.TestCase):
         self.assertTrue(data['worker'])
 
     def test_add_worker_with_no_name(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .post('/workers',
                   headers={"Authorization": 'Bearer ' + self.AdminToken},
                   json={})
@@ -286,12 +285,12 @@ class ChoresTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
 
     def test_delete_worker(self):
-        worker = Worker\
-            .query\
+        worker = Worker \
+            .query \
             .filter(Worker.name.ilike("%" + "Test Worker 5" + "%")).first()
 
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .delete('/workers/' + str(worker.id),
                     headers={"Authorization": 'Bearer ' + self.AdminToken})
         data = json.loads(response.data)
@@ -300,8 +299,8 @@ class ChoresTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
 
     def test_delete_worker_failure(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .delete('/workers/5000',
                     headers={"Authorization": 'Bearer ' + self.AdminToken})
         data = json.loads(response.data)
@@ -310,8 +309,8 @@ class ChoresTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
 
     def test_get_assigned_chores(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .get('/assigned-chores',
                  headers={"Authorization": 'Bearer ' + self.AdminToken})
         data = json.loads(response.data)
@@ -321,8 +320,8 @@ class ChoresTestCase(unittest.TestCase):
         self.assertTrue(data['chores'])
 
     def test_add_assigned_chores(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .post('/assigned-chores',
                   headers={"Authorization": 'Bearer ' + self.AdminToken},
                   json={'chore': 'Test Chore 1',
@@ -335,8 +334,8 @@ class ChoresTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
 
     def test_add_assigned_chores_with_bad_worker(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .post('/assigned-chores',
                   headers={"Authorization": 'Bearer ' + self.AdminToken},
                   json={'chore': 'Test Chore 1',
@@ -353,8 +352,8 @@ class ChoresTestCase(unittest.TestCase):
             filter(AssignedChore
                    .duration.ilike("%" + "Test Duration" + "%")).first()
 
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .delete('/assigned-chores/' + str(chore.id),
                     headers={"Authorization": 'Bearer ' + self.AdminToken})
         data = json.loads(response.data)
@@ -363,8 +362,8 @@ class ChoresTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
 
     def test_delete_assigned_chores_failure(self):
-        response = self\
-            .client()\
+        response = self \
+            .client() \
             .delete('/assigned-chores/5000',
                     headers={"Authorization": 'Bearer ' + self.AdminToken})
         data = json.loads(response.data)
